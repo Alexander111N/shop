@@ -1,5 +1,5 @@
 <template>
-  <div class="productCard border">
+  <div class="productCard borderProductCard">
     <img 
     :src="imgUrl"
     class="size1">
@@ -23,6 +23,9 @@ import { defineComponent} from 'vue'
 export default defineComponent({
   name: 'ProductCard',
   props:{
+    id: {
+      type: String
+    },
     title: {
       type: String
     },
@@ -34,6 +37,16 @@ export default defineComponent({
     },
     imgUrl: {
       type: String
+    }
+  },
+  setup(props, ctx) {
+
+    function addToBusket() {
+      ctx.emit('add-To-Busket')
+    }
+
+    return {
+      addToBusket
     }
   }
 
@@ -52,7 +65,7 @@ export default defineComponent({
     height: 100px;
   }
   
-  .border {
+  .borderProductCard {
     border: solid grey 1px;
   }
 
