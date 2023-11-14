@@ -10,7 +10,10 @@
       <p>Доступно для доставки: {{ count }}шт.</p>
       <button
         @click="addToBusket">
-        Добавить в корзину</button>         
+        Добавить в корзину</button>
+      <button
+        @click="showCharacteristic">
+        Характеристика товара</button>              
     </div>
 
   </div> 
@@ -18,7 +21,9 @@
 
 <script lang="ts">
 
-import { defineComponent} from 'vue'
+import { defineComponent } from 'vue'
+
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'ProductCard',
@@ -41,12 +46,20 @@ export default defineComponent({
   },
   setup(props, ctx) {
 
+    const router = useRouter()
+
     function addToBusket() {
       ctx.emit('add-To-Busket')
     }
 
+    function showCharacteristic() {
+      router.push({ path: `/characteristic/${props.id}` })
+    }
+    // params: id
+
     return {
-      addToBusket
+      addToBusket,
+      showCharacteristic
     }
   }
 

@@ -2,12 +2,12 @@
 
   <div class="mainPage">
     <div
-      class="productsCatalog margin-bottom">Этот компонент называется {{ title }}
+      class="productsCatalog margin-bottom">Магазин мебели на Кутузовском
     </div>
 
     <div class="margin-bottom productsCatalog">
-      <div class="margin-bottom" style="display:inline-block;">
-        Каталог продукции!!!
+      <div class="margin-bottom size32" style="display:inline-block;">
+        Каталог продукции
       </div>
       <div
         class="flex">
@@ -38,6 +38,7 @@
     <UserBusket
       v-if="showBasket"/>
 
+    <a class="pointer" @click="goToHomePage">На главную страницу</a>
   </div>
 
 </template>
@@ -47,6 +48,7 @@
 import type { TProduct } from '../utilities/type'
 
 import { computed, defineComponent, ref} from 'vue'
+import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
 import ProductCard from './ProductCard.vue'
@@ -61,8 +63,11 @@ export default defineComponent({
 
   setup(props, ctx) {
 
+    const router = useRouter()
     const store =  useStore()           // К стору могу обращаться из setup так как он инициализируется раньше? Да стор инициализируется в самом начале.
     store.dispatch('fetchProducts')
+
+    console.log('MainPage store', store.getters.allProducts)
 
     const title = ref<string>('MainPage')
 
@@ -86,6 +91,9 @@ export default defineComponent({
       return store.getters.getUserProducts.length > 0
     })
 
+    function goToHomePage() {
+      router.push({ name: 'Home' })
+    }
 
     return {
       title,
@@ -93,6 +101,7 @@ export default defineComponent({
       addNewProductInCatalog,
       addProdUserBasket,
       showBasket,
+      goToHomePage
     }    
   }
 })
@@ -102,6 +111,7 @@ export default defineComponent({
 <style>
   .mainPage {
     border: 1px solid red;
+    background-color: floralwhite;
   }
 
   .flex {
@@ -109,44 +119,23 @@ export default defineComponent({
   justify-content: flex-start;
   flex-wrap: wrap;
  }
+ 
+  .size32 {
+    font-size: 32px;
+    font-weight: bold;
+  }
 
- .margin-bottom {
-  margin-bottom: 30px;
- }
+  .margin-bottom {
+    margin-bottom: 30px;
+  }
 
- .productsCatalog {
-   text-align: center;
- }
+  .productsCatalog {
+    text-align: center;
+  }
 
- .button {
-  margin: auto;
-  display: block;
- }
+  .button {
+    margin: auto;
+    display: block;
+  }
 
 </style>
-
-
-
-
-
-
-
-    function check() {
-      if(products.value === store.state.products) {
-         console.log('Массив ссылается на один и тот же объект' )
-      }
-      if(products.value[0] === store.state.products[0]) {
-         console.log('Элемент ссылается на один и тот же объект' )
-      }
-      if(products.value[0].count === store.state.products[0].count) {
-         console.log('значения равны' )
-      }      
-      console.log('products на странице до изменений', products.value[0] )
-      console.log('products в state до изменений', store.state.products[0] )
-
-      products.value[0].count = 888
-
-     console.log('products на странице после изменений', products.value[0] )
-      console.log('products в state', store.state.products[0] )
-
-    }

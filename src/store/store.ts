@@ -17,6 +17,7 @@ export const store = createStore({
   },
   getters: {
     allProducts(state):TProduct[] {
+      console.log('отработал  getters allProducts')
       return JSON.parse(JSON.stringify(state.products))
     },
     getUserProducts(state) {
@@ -30,6 +31,7 @@ export const store = createStore({
     },
     changeProducts(ctx) {
       ctx.commit('addProd',     {
+        id: '2',
         title: 'Стол Навороченный2222',
         imgUrl: 'https://static.tildacdn.com/tild3164-6632-4539-b530-376336623631/65476E3D-CB05-414A-8.jpeg',
         price: 3500,

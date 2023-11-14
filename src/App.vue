@@ -1,5 +1,8 @@
 <template>
-  <MainPage></MainPage>
+  <router-view>
+
+  </router-view>
+  <!-- <MainPage></MainPage> -->
 </template>
 
 <script lang="ts">
